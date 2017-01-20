@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="myApp">
+        <div v-bind:class="{active:isActive}">
+            v-bind:class={active:isActive}
+        </div>
+        <div v-bind:class="{active:isActive, 'text-danger': hasError}">
+            Error Message.
+        </div>
+        <div v-bind:class="classObj">
+            Error Content.
+        </div>
+    </div>
+
+    <script>
+        var myApp = new Vue({
+            el: '#myApp',
+            data: {
+                isActive: true,
+                hasError: true,
+                classObj: {
+                    active: false,
+                    'text-danger': true,
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

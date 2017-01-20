@@ -1,5 +1,12 @@
 body,button,input {
-    font-family: "メイリオ";
+    font-family: メイリオ;
     font-size: 32px;
 }
 
+.active {
+    font-style: italic;
+}
+
+.text-danger {
+    color: red;
+}
