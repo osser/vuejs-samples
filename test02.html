@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="myApp">
+        <p>a = {{a}}</p>
+    </div>
+    <p>＊consoleもみてください。</p>
+    <script>
+        var data = { a: 100 };
+        var vm = new Vue({
+            el: '#myApp',
+            data: data,
+            created: function () {
+                console.log("vm is created.");
+            },
+            mounted: function () {
+                console.log("vm is mounted.");
+            },
+            updated: function () {
+                console.log("vm is updated.");
+            },
+            destroyed: function () {
+                console.log("vm is destroyed.");
+            },
+        });
+        vm.$watch('a', function (newVal, oldVal) {
+            console.log("watch:", newVal, oldVal);
+        });
+
+        console.log("");
+        console.log("vm.a === data.a : " + (vm.a === data.a));
+        console.log("");
+        vm.a = 200;
+        console.log("vm.a === data.a : " + (vm.a === data.a));
+        console.log("vm.a : " + vm.a);
+        console.log("data.a : " + data.a);
+        console.log("");
+        data.a = 300;
+        console.log("vm.a === data.a : " + (vm.a === data.a));
+        console.log("vm.a : " + vm.a);
+        console.log("data.a : " + data.a);
+    </script>
+</body>
+
+</html>
