@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="myApp">
+        <p>{{msg}}</p>
+        <p v-once>{{msg}}(v-once)</p>
+        <input type="text" v-model="msg">
+        <hr>
+        <div v-html="myhtml"></div>
+        <button type="button" v-bind:disabled="btnStatus" v-on:click="btnClick">按钮1</button>
+        <button type="button" v-bind:disabled="!btnStatus" @click="btnClick">按钮2</button>
+        <hr>
+        <p v-if="seen">你能看到这里吗？</p>
+        <p>
+            <a v-bind:href="googleURL" target="_blank">Google</a>
+        </p>
+        <p>{{msg2 | capitalize}}</p>
+    </div>
+
+    <script>
+        var myApp = new Vue({
+            el: '#myApp',
+            data: {
+                msg: '测试消息内容abcde12345',
+                msg2: 'this is a filter sample.',
+                myhtml: '<b>B TAG(v-html)</b>',
+                btnStatus: true,
+                seen: true,
+                googleURL: 'http://www.google.co.jp',
+            },
+            methods: {
+                btnClick: function () {
+                    this.btnStatus = !this.btnStatus;
+                }
+            },
+            filters: {
+                capitalize: function (value) {
+                    if (!value) return "";
+                    value = value.toString();
+                    return value.charAt(0).toUpperCase() + value.slice(1);
+                },
+            },
+        });
+    </script>
+</body>
+
+</html>
