@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="myApp">
+        <h3>计算属性与计算方法</h3>
+        <p>正序：{{message}}</p>
+        <p>倒序(计算属性)：{{reversedMessage}} / {{now}}</p>
+        <p>倒序(计算函数)：{{reversedMessageFunc()}} / {{nowFunc()}}</p>
+    </div>
+
+    <div id="myApp2">
+        <h3>观察属性</h3>
+        <div>
+            <p>{{fullName}}</p>
+            <p>{{fullNameAuto}}</p>
+        </div>
+    </div>
+
+    <div id="myApp3">
+        <h3>观察Watchers</h3>
+        <p>问一个问题：
+            <input v-model="question">
+        </p>
+        <p>{{answer}}</p>
+    </div>
+
+    <script>
+        var myApp = new Vue({
+            el: '#myApp',
+            data: {
+                message: 'Helo',
+            },
+            computed: {
+                reversedMessage: function () {
+                    return this.message.split('').reverse().join('');
+                },
+                now: function () {
+                    return Date.now();
+                },
+            },
+            methods: {
+                reversedMessageFunc: function () {
+                    return this.message.split('').reverse().join('');
+                },
+                nowFunc: function () {
+                    return Date.now();
+                },
+            }
+        });
+
+        var myApp2 = new Vue({
+            el: '#myApp2',
+            data: {
+                firstName: 'Bob',
+                lastName: 'Bar',
+                fullName: 'Bob Bar',
+            },
+            computed: {
+                fullNameAuto: function () {
+                    return this.firstName + ' ' + this.lastName;
+                },
+            },
+            watch: {
+                firstName: function (val) {
+                    this.fullName = val + ' ' + this.lastName;
+                },
+                lastName: function (val) {
+                    this.fullName = this.firstName + ' ' + val;
+                },
+            },
+        });
+
+        var myApp3 = new Vue({
+            el: '#myApp3',
+            data: {
+                question: '',
+                answer: '请提正确的问题！',
+            },
+            watch: {
+                question: function (newQuestion) {
+                    this.answer = "输入中...";
+                    this.getAnswer();
+                },
+            },
+            methods: {
+                getAnswer: _.debounce(function () {
+                    var vm = this;
+                    if (this.question.indexOf('?') == -1) {
+                        vm.answer = "这是一个问题吗？别忘了加一个问号。";
+                        return;
+                    }
+                    vm.answer = "思考中...";
+                    axios.get('https://yesno.wtf/api')
+                        .then(function (res) {
+                            vm.answer = _.capitalize(res.data.answer);
+                        })
+                        .catch(function (err) {
+                            vm.answer = "遇到错误";
+                        });
+                }, 500),
+            },
+        });
+    </script>
+</body>
+
+</html>
