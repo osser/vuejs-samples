@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="myApp">
+        <button type="button" @click="counter += 1">增加1</button>
+        <p>这个按钮被点击了{{counter}}次。</p>
+        <p>
+            <button type="button" @click="btnClick($event)">传递参数的按钮</button>
+        </p>
+        <h3>事件修饰符</h3>
+        <ul>
+            <li v-for="e in eventmodifers">
+                .{{e}}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        var myApp = new Vue({
+            el: '#myApp',
+            data: {
+                counter: 0,
+                eventmodifers: ['stop', 'prevent', 'capture', 'self', 'once'],
+            },
+            methods: {
+                btnClick: function (event) {
+                    console.log(event);
+                },
+            }
+        });
+    </script>
+</body>
+
+</html>
