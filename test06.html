@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="myApp">
+        <h1 v-if="ok">Yes(v-if)</h1>
+        <h1 v-else>No</h1>
+
+        <h1 v-if="!ok">Yes</h1>
+        <h1 v-else>No(v-else)</h1>
+
+        <div>
+            <template v-if="ok">
+                Template Test(v-if)
+            </template>
+        </div>
+
+        <div v-if="Math.random() > 0.5">
+            Sorry(Math.random)
+        </div>
+        <div v-else>
+            Not sorry(v-else)
+        </div>
+
+        <div v-if="type == 'A'">
+            A分支
+        </div>
+        <div v-else-if="type == 'B'">
+            B分支(v-else-if)
+        </div>
+        <div v-else>
+            Not A/B
+        </div>
+
+        <template v-if="loginType == 'username'">
+            <label for="">Username</label>
+            <input placeholder="Enter your username" key="username-input">
+        </template>
+        <template v-else>
+            <label for="">Email</label>
+            <input placeholder="Enter your email address" key="email-input">
+        </template>
+        <div>
+            <button type="button" @click="btnSwitch">Toggle login type</button>
+        </div>
+
+        <h2 v-show="ok">OK(v-show)</h2>
+    </div>
+
+    <script>
+        var myApp = new Vue({
+            el: '#myApp',
+            data: {
+                ok: true,
+                type: 'B',
+                loginType: 'username',
+            },
+            methods: {
+                btnSwitch: function () {
+                    this.loginType = this.loginType === 'username' ? 'email' : 'username'
+                },
+            },
+        });
+    </script>
+</body>
+
+</html>
